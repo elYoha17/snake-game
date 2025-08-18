@@ -1,4 +1,6 @@
 import { configs } from "./configs";
+import Game from "./game";
+import type Point from "./Point";
 
 export default class Console extends HTMLElement {
   
@@ -6,6 +8,9 @@ export default class Console extends HTMLElement {
   canvas!: HTMLCanvasElement;
   scoreEl!: HTMLElement;
   context!: CanvasRenderingContext2D|null;
+  game!: Game;
+  frames!: number;
+  delay: number = 20;
 
   get css() {
     return `
@@ -64,5 +69,31 @@ export default class Console extends HTMLElement {
     this.canvas.height = configs.hStep * configs.size;
     this.context = this.canvas.getContext('2d');
     
+  }
+
+  draw(sketch: Point[]) {
+    this.context?.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    sketch.forEach(s => {
+      if (this.context) {
+        this.context.fillStyle = s.style;
+        this.context.fillRect(s.x * configs.size, s.y * configs.size, configs.size, configs.size);
+      }
+    });
+  }
+
+  restart() {
+    this.frames = 0;
+    this.delay = 20;
+    this.game = new Game();
+  }
+
+  update = () => {
+    if (this.frames % this.delay === 0) {
+      this.game.generateFood();
+      this.draw(this.game.sketch);
+    }
+
+    this.frames++;
+    requestAnimationFrame(this.update);
   }
 }
