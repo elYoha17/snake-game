@@ -1,4 +1,3 @@
-import { configs } from "./configs";
 import { Direction } from './direcction';
 
 export default class Point {
