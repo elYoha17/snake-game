@@ -46,14 +46,6 @@ export default class Point {
     return this.x === other.x && this.y === other.y;
   }
 
-  static random(style: string = 'black'): Point {
-    return new Point(
-      Math.random() * (configs.wStep - 1),
-      Math.random() * (configs.hStep - 1),
-      style,
-    )
-  }
-
   to(direction: Direction, step: number = 1): Point {
     const point = this.clone();
 

@@ -66,13 +66,21 @@ export default class Game {
   start() {
     this._start = true;
   }
+  
+  private random(style: string = 'black'): Point {
+    return new Point(
+      Math.random() * (configs.wStep - 1),
+      Math.random() * (configs.hStep - 1),
+      style,
+    );
+  }
 
   private generateFood() {
     let p: Point;
     let retries = configs.wStep * configs.hStep;
 
     do {
-      p = Point.random(configs.foodColor);
+      p = this.random(configs.foodColor);
       retries--;
     } while (retries >= 0 && this.snake.some((s) => s.equal(p)));
 
