@@ -1,5 +1,5 @@
 import { configs } from "./configs";
-import { Direction } from "./direcction";
+import { Direction } from "./Directions";
 import Game from "./Game";
 import type Point from "./Point";
 

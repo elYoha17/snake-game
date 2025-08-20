@@ -1,5 +1,5 @@
 import { configs } from "./configs";
-import { Direction, opposite } from "./direcction";
+import { Direction, opposite } from "./Directions";
 import Point from "./Point";
 
 export default class Game {
@@ -87,6 +87,29 @@ export default class Game {
     this.food = p;
   }
 
+  
+
+  to(p: Point, direction: Direction, step: number = 1): Point {
+    const point = p.clone();
+
+    switch (direction) {
+      case Direction.Up:
+        point.y -= step;
+        break;
+      case Direction.Down:
+        point.y += step;
+        break;
+      case Direction.Left:
+        point.x -= step;
+        break;
+      case Direction.Right:
+        point.x += step;
+        break;
+    }
+
+    return point;
+  }
+
   getDirection(): Direction {
     const head = this.head;
     const neck = this.neck;
@@ -107,19 +130,23 @@ export default class Game {
 
   transpose(point: Point): Point {
     const p = point.clone();
-    p.x = ((p.x % configs.wStep) + 3) % configs.wStep;
-    p.y = ((p.y % configs.hStep) + 3) % configs.hStep;
+    p.x = ((p.x % configs.wStep) + configs.wStep) % configs.wStep;
+    p.y = ((p.y % configs.hStep) + configs.hStep) % configs.hStep;
     return p;
   }
 
   preview(): Point {
-    let head = this.head.to(this.getDirection()).clone();
+    let head = this.to(this.head, this.getDirection()).clone();
 
-    if (this.transposable) {
+    if (this.hitWall(head) && this.transposable) {
       head = this.transpose(head);
     }
 
     return head;
+  }
+
+  hitWall(p: Point) {
+    return  p.x < 0 || p.y < 0 || p.x >= configs.wStep || p.y >= configs.hStep;
   }
 
   move() {

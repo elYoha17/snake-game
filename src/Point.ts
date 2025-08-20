@@ -1,5 +1,3 @@
-import { Direction } from './direcction';
-
 export default class Point {
   private _x: number;
   private _y: number;
@@ -43,26 +41,5 @@ export default class Point {
 
   equal(other: Point): boolean {
     return this.x === other.x && this.y === other.y;
-  }
-
-  to(direction: Direction, step: number = 1): Point {
-    const point = this.clone();
-
-    switch (direction) {
-      case Direction.Up:
-        point.y -= step;
-        break;
-      case Direction.Down:
-        point.y += step;
-        break;
-      case Direction.Left:
-        point.x -= step;
-        break;
-      case Direction.Right:
-        point.x += step;
-        break;
-    }
-
-    return point;
   }
 }

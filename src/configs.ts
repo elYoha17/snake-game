@@ -1,4 +1,5 @@
-import { Direction } from "./direcction";
+import { Direction } from "./Directions";
+
 
 export const configs = {
   wStep: 10,
@@ -7,8 +8,8 @@ export const configs = {
 
   minLength: 3,
   foodColor: '#3e0404',
-  headColor: '#063e04',
-  bodyColor: '#1b2a1aff',
+  headColor: '#0d6c08ff',
+  bodyColor: '#26a21fff',
 
   direction: Direction.Right
 };
